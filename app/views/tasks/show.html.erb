@@ -35,6 +35,15 @@
   <%= @task.comment %>
 </p>
 
+<p>
+  <% @task.notes.each do |note| %>
+  	<p>
+  		<%= note.user.email %> says <%= note.description %>
+  	</p>
+  <% end %>
+</p>
+
+<%= render 'notes/form' %>
 
 <%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
