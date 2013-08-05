@@ -2,8 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.11'
 gem 'devise'
-
-
+gem "watu_table_builder", :require => "table_builder"
+gem 'event-calendar', :require => 'event_calendar'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

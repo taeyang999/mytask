@@ -1,17 +1,13 @@
 Mytask::Application.routes.draw do
 
+  match 'notes' => 'notes#index', :via => :get
+  match 'notes/:id/edit' => 'notes#edit', :via => :get
+  
+  resources :devise
+  
   resources :notes
 
-
-	get "public/home"
-	
-  get "public/about_us"
-
-  get "public/contact_us"
-
-  get "public/tos"
-
-  get "public/privacy"
+	get "home" => "public#home"
 
   resources :tasks
 

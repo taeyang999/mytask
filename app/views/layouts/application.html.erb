@@ -1,36 +1,102 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mytask</title>
+  <title> #  t  a  s  k  s </title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+  <script>
+  	 $(function() {
+				$( "#due_date_picker" ).datepicker();
+			});
+  </script>
+
+
+  <style>
+  	.searchbar {
+  		margin-left:auto;
+  		margin-right:auto;
+  		margin-bottom: 1px;
+  		margin-top: 10px;
+  		width:90%;
+  		text-align: right;
+  	}
+  	.header {
+  		clear: both;
+  	  margin-left:auto;
+  		margin-right:auto;
+  		width:90%;
+  		padding:10px;
+  		background-color:#888;
+  		color:#fff;
+  		text-align:right;
+  	}
+  	.content {
+  		margin-left:auto;
+  		margin-right:auto;
+  		width:90%;
+  		margin-bottom:50px;
+  		margin-top:20px;
+  	}
+  	.footer {
+  		clear: both;
+  		margin-left:auto;
+  		margin-right:auto;
+  		width:90%;
+  		padding:10px;
+  		background-color:#888;
+  		color:#fff;
+  		text-align:center;
+  		height:50px;
+  		font-size:12px;
+  	}
+  	a.header {
+  		color:#fff;
+  		text-align:left;
+  	}
+  	textarea {
+  		width:500px;
+  		height:130px;
+  	}
+  </style>
+
+
 </head>
 <body>
-	<div id=menu>
-		AISYS, Inc		
-		<% if user_signed_in? %>
-		  <%= link_to "Home", tasks_path %>  |
+	<div class="header">	  
+		<% if user_signed_in? %>		
+			<%= link_to "AISYS, Inc", tasks_path, :class => "header" %>
 		<% else %>
-		  <%= link_to "Home", new_user_session_path %>  |
+			<!-- BLANK -->  
 		<% end %>
-		<%= link_to "Tasks", tasks_path %> |
-		<%= link_to "About us", public_about_us_path %> |
-		<%= link_to "Contact us", public_contact_us_path %> |
-		<%= link_to "Terms of Service", public_tos_path %> |
-		<%= link_to "Privacy", public_privacy_path %> |
+		
 		<% if user_signed_in? %>
-			Hello, <%= current_user.email %> | 
-			<%= link_to "Logout", destroy_user_session_path, :method => :delete %>
+			  Hello, <%= current_user.email %>
+			<%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => "header" %>
 		<% else %>
-			<%= link_to "Login", new_user_session_path %>
-		<% end %>
-	</div>
-	<div>
-		<p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-	</div>
-<%= yield %>
+			<%= link_to "Login", new_user_session_path, :class => "header" %>
+		<% end %>	
+</div>
 
+<div class="searchbar">		
+<%= form_tag tasks_path, :method => 'get' do %>
+	<%= submit_tag "Search", :name => nil %>
+  <%= text_field_tag :search, params[:search] %>
+<% end %>
+</div>
+
+	<div class="content">
+		<% if notice || alert %>
+			<p class="notice"><%= notice %></p>
+			<p class="alert"><%= alert %></p>
+    <% end %>
+ 	
+    <%= yield %>
+	</div>
+	<div class="footer">
+		2013 AISYS, Inc. All rights reserved.
+	</div>
 </body>
 </html>

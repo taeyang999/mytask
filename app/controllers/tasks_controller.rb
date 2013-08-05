@@ -6,11 +6,12 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     @tasks = Task.all
-
-    respond_to do |format|
+	  @date = params[:month] ? Date.strptime(params[:month], "%Y-%m").to_time : Date.today
+	  respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @tasks }
     end
+    @tasks = Task.search(params[:search])
   end
 
   # GET /tasks/1
@@ -47,7 +48,11 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(params[:task])
     @task.user_id = current_user.id
-
+    
+    task_hash = params[:task]
+		due_date_string = task_hash["due_date"]
+		@task.due_date = Date.strptime(due_date_string, "%m/%d/%Y").to_time
+		
     respond_to do |format|
       if @task.save
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
@@ -63,6 +68,9 @@ class TasksController < ApplicationController
   # PUT /tasks/1.json
   def update
     @task = Task.find(params[:id])
+		task_hash = params[:task]
+		due_date_string = task_hash["due_date"]
+		params[:task][:due_date] = Date.strptime(due_date_string, "%m/%d/%Y").to_time
 
     respond_to do |format|
       if @task.update_attributes(params[:task])

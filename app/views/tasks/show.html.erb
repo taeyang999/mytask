@@ -1,49 +1,73 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @task.title %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @task.description %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @task.status %>
-</p>
-
-<p>
-  <b>Due date:</b>
-  <%= @task.due_date %>
-</p>
-
-<p>
-  <b>Created by:</b>
-  <%= @task.user.email %>
-</p>
-
-<p>
-  <b>Employer:</b>
-  <%= @task.employer %>
-</p>
-
-<p>
-  <b>Comment:</b>
-  <%= @task.comment %>
-</p>
-
-<p>
-  <% @task.notes.each do |note| %>
-  	<p>
-  		<%= note.user.email %> says <%= note.description %>
-  	</p>
-  <% end %>
-</p>
-
-<%= render 'notes/form' %>
-
-<%= link_to 'Edit', edit_task_path(@task) %> |
-<%= link_to 'Back', tasks_path %>
+<div>
+  <div class="tableleft">
+<table class="table table-bordered table-striped table-hover">
+    
+      <tr>
+        <th>Created_Date:</th>
+ 				<td><%= @task.created_at.strftime("%b %d, %Y") %></td>
+ 			</tr>
+ 			
+ 			<tr>	
+        <th>Title:</th>
+				<td><%= @task.title %></td>
+      </tr>
+      <tr>  
+        <th>Description:</th>
+  			<td><%= @task.description %></td>
+      </tr>
+      
+      <tr>
+        <th>Status:</th>
+ 			  <td><%= @task.status %></td>
+      </tr>
+      
+      <tr>
+        <th>Due_Date:</th>
+ 				<td><%= @task.due_date.strftime("%b %d, %Y") %></td>
+      </tr>
+      
+      <tr>
+        <th>Created by:</th>
+  			<td><%= @task.user.email %></td>
+      </tr>
+      
+      <tr>  
+      	<th>Employer:</th>
+  			<td><%= @task.employer %></td>
+      </tr>
+    
+    
+<!--    <tbody>
+		</tbody>   -->
+		
+  </table>
+  </div>
+  <div class="tableright">
+  
+  
+<table class="table table-bordered table-striped table-hover">
+  <td>
+					<ul class="breadcrumb"> 
+					  <li class="active">
+					  <b>Notes</b>
+					  <br />
+					  <br />
+					  	<% @task.notes.each do |note| %>
+					  		<p>
+					  			<span class="badge badge-info"><%= localize(note.created_at, :format => :long) %></span>
+					  			<span class="badge badge-warning"><%= note.user.email %></span> : <b><%= note.description %></b>
+					  		</p>
+					  	<% end %>
+				    </li>
+				  </ul>
+	
+				<%= render 'notes/form' %>
+				
+				</td>
+</table>
+</div>
+</div>
+<%= link_to 'Edit', edit_task_path(@task), :class => 'btn btn-info'%>
+<%= link_to 'Back', tasks_path, :class => 'btn btn-info' %>
